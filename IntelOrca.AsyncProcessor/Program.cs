@@ -59,7 +59,7 @@ namespace IntelOrca.AsyncProcessor
 		/// <param name="maintainOrder"></param>
 		private static void TestDemonstration(bool maintainOrder)
 		{
-			var processor = new AsyncProcessor<InputPacket, OutputPacket>(ProcessPacket, maintainOrder);
+			var processor = new AsyncProcessor<InputPacket, OutputPacket>(ProcessPacketAsync, maintainOrder);
 			var resultObserver = new ResultObserver();
 
 			using (var resultObserverSubscription = processor.Subscribe(resultObserver)) {
@@ -81,7 +81,7 @@ namespace IntelOrca.AsyncProcessor
 		/// </summary>
 		/// <param name="packet">The input packet.</param>
 		/// <returns>Task to return the processed input packet as an output packet.</returns>
-		private static async Task<OutputPacket> ProcessPacket(InputPacket packet)
+		private static async Task<OutputPacket> ProcessPacketAsync(InputPacket packet)
 		{
 			await Task.Delay(Random.Next(250, 500));
 			return new OutputPacket(packet.Index);
